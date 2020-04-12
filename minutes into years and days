@@ -1,0 +1,15 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Time {
+    public static void main(String []args){
+        int min;
+        System.out.print("minutes: ");
+        Scanner scanner=new Scanner(System.in);
+        min=scanner.nextInt();
+        int years=min/(24*365*60);
+        int days= min%(24*365*60)/(24*60);
+        System.out.println("years: "+years+" days: "+days);
+    }
+}
