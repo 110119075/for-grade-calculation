@@ -1,0 +1,41 @@
+package com.company;
+
+public class MatrixCalculations {
+    public static void main(String [] args){
+        int a[][]={{1,3,4},{2,4,3},{3,4,5}};
+        int b[][]={{1,3,4},{2,4,3},{1,2,4}};
+        int c[][]={{0,0,0},{0,0,0},{0,0,0}};
+        //for matrix addition
+        System.out.println("here comes matrix addition!!");
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                c[i][j]=a[i][j]+b[i][j];
+            }
+        }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                System.out.print(c[i][j]+" ");
+            }
+            System.out.println();
+        }
+        //for matrix multiplication
+        System.out.println("here comes matrix multiplication!!");
+        int d[][]={{0,0,0},{0,0,0},{0,0,0}};
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+
+                for(int k=0;k<3;k++){
+                    d[i][j]+=a[i][k]*b[k][j];
+                }
+
+            }
+        }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                System.out.print(d[i][j]+" ");
+            }
+            System.out.println();
+        }
+
+    }
+}
