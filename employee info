@@ -1,0 +1,39 @@
+       package com.company;
+
+import java.text.DecimalFormat;
+
+public class Employee {
+    String name;
+    int YearOfJoining;
+    double salary;
+    String address;
+    void setData(String name1,int yoj,double sal,String ad){
+        name=name1;
+        YearOfJoining=yoj;
+        salary=sal;
+        address=ad;
+    }
+
+    public static void main(String[] args) {
+        Employee obj[]=new Employee[3];
+        obj[0]=new Employee();
+        obj[1]=new Employee();
+        obj[2]=new Employee();
+
+        obj[0].setData("Robert",1994,98754.54,"64C-WallsStreet");
+
+        obj[1].setData("Sam",2000,64587.56,"68D-WallsStreet");
+
+        obj[2].setData("John",1999,85164.32,"26B-WallsStreet");
+
+        DecimalFormat df=new DecimalFormat("$###,###.##");
+        System.out.println("Name       YearOfJoining      Address           Salary");
+        for(int i=0;i<3;i++){
+             System.out.printf("%-15s",obj[i].name);
+            System.out.print(obj[i].YearOfJoining+"       ");
+            System.out.print(obj[i].address+"      ");
+            System.out.println(df.format(obj[i].salary));
+    }
+    }
+}
+
