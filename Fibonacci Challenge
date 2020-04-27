@@ -1,0 +1,19 @@
+package Skill;
+
+public class Fibonacci {
+    public static void main(String[] args) {
+        int a=0;
+        int b=1;
+        System.out.println("the fibonacci series between 0 and 100 :");
+        System.out.print(a+" "+b);
+        fibonacci(a,b);
+    }
+    private static void fibonacci(int a, int b){
+        int c=a+b;
+        if(c>100){return;}
+        System.out.print(" "+c);
+        a=b;
+        b=c;
+        fibonacci(a,b);
+    }
+}
