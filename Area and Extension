@@ -1,0 +1,25 @@
+#this is the first task
+
+import math
+radius=float(input("input the radius of the circle= "))
+print("the area of the circle with radius",radius,"is:",math.pi*radius*radius)
+
+#here comes the second task
+
+file_name=input("Input the Filename: ").split(".")
+if(len(file_name)>1):
+    print('The extension of the file is:',end=" ")
+    if(file_name[len(file_name)-1]=='py'):
+        print("'Python'")
+    if(file_name[len(file_name)-1]=='c'):
+        print("'C'")
+    if(file_name[len(file_name)-1]=='cpp'):
+        print("'C Plus Plus'")
+    if(file_name[len(file_name)-1]=='java'):
+        print("'Java'")
+    if(file_name[len(file_name)-1]=='txt'):
+        print("'Text'")
+    if(file_name[len(file_name)-1]=='exe'):
+        print("'Executable'")
+else:
+    print("Invalid file name!!")
