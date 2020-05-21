@@ -1,0 +1,11 @@
+n=int(input("enter the number of terms you want: "))
+a=0;
+b=1;
+print(a,end=" ")
+print(b,end=" ")
+count=0;
+for count in range(0,n-2):
+    print(a+b,end=" ")
+    c=a
+    a=b
+    b=c+b
