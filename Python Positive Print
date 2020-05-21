@@ -1,0 +1,10 @@
+list1=[]
+answer=[]
+n=int(input("Enter the number you want in your list: "))
+for i in range(0,n):
+    list1.append(int(input("add element: ")))
+for j in list1:
+    if(j>0):
+        answer.append(j)
+print("Input list1 =",list1)
+print("Output:",answer)
