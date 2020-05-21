@@ -1,0 +1,25 @@
+def sortSecond(val):
+    return val[1]
+
+
+
+def most_frequent(string):
+    dict1=dict.fromkeys(list(string),0)
+    for i in list(string):
+        dict1[i]+=1
+        
+    list1=[]
+    
+    for item in dict1.items():
+        list1.append(item)
+    list1.sort(key=sortSecond,reverse=True)
+    for val in list1:
+        print(val[0],"=",val[1])
+    
+    
+
+                
+                 
+
+string=input("Please enter a string : ")
+most_frequent(string)
