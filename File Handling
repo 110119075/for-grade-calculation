@@ -1,0 +1,82 @@
+import csv
+
+
+def write_into_excel(row_info_list):
+    with open('StudentInformation.csv', 'a', newline='') as csv_file:
+        writer = csv.writer(csv_file)
+
+        if csv_file.tell() == 0:
+            writer.writerow(['Name', 'Year', 'Branch', 'Contact Number'])
+
+        writer.writerow(row_info_list)
+
+
+if __name__ == '__main__':
+    condition = True
+    student_count = 1
+
+    while (condition):
+        row_info = input(
+            "enter the row information for student #{} in the form (name year branch contact_number): ".format(
+                student_count))
+        row_info_list = row_info.split(" ")
+        print("\nverify the information:\nName: {}\nYear: {}\nBranch: {}\nContact Number: {}".format(row_info_list[0],
+                                                                                                     row_info_list[1],
+                                                                                                     row_info_list[2],
+                                                                                                     row_info_list[3]))
+        check = input("is there any error in it(yes/no): ")
+        if (check == 'yes'):
+            print('please enter the values again!!')
+        elif (check == 'no'):
+            write_into_excel(row_info_list)
+            next_condition = input("do you want to enter the information of another student(yes/no): ")
+            if (next_condition == 'yes'):
+                condition = True
+                student_count += 1
+            elif (next_condition == 'no'):
+                condition = False
+            else:
+                print("please enter (yes/no) nothing else!!")
+        else:
+            print("please enter (yes/no) nothing else!!")
+
+
+#============================================================================================================================#
+#Output:
+
+
+enter the row information for student #1 in the form (name year branch contact_number): P.Adarsh first Instrumentation 8749561230
+
+verify the information:
+Name: P.Adarsh
+Year: first
+Branch: Instrumentation
+Contact Number: 8749561230
+is there any error in it(yes/no): yes
+please enter the values again!!
+enter the row information for student #1 in the form (name year branch contact_number): P.Adarsh first Instrumentation 8749561231
+
+verify the information:
+Name: P.Adarsh
+Year: first
+Branch: Instrumentation
+Contact Number: 8749561231
+is there any error in it(yes/no): no
+do you want to enter the information of another student(yes/no): yes
+enter the row information for student #2 in the form (name year branch contact_number): Jack second CS 9876543210
+
+verify the information:
+Name: Jack
+Year: second
+Branch: CS
+Contact Number: 9876543210
+is there any error in it(yes/no): no
+do you want to enter the information of another student(yes/no): no
+
+
+#====================================================================================
+#Output in StudentInformation.csv file:
+
+Name,Year,Branch,Contact Number
+P.Adarsh,first,Instrumentation,8749561231
+Jack,second,CS,9876543210
