@@ -1,0 +1,98 @@
+#the first_scraping.py file
+
+import requests
+from bs4 import BeautifulSoup
+import argparse
+import connect
+import pandas as pd
+
+parser=argparse.ArgumentParser()
+parser.add_argument("--db_name",help="enter the name of database",type = str)
+args=parser.parse_args()
+
+job_url="https://www.monster.com/jobs/search/?q=Software-Developer&where=Australia"
+req=requests.get(job_url)
+content=req.content
+info_list_scrapped=[]
+connect.connect(args.db_name)
+#print(content)
+
+soup=BeautifulSoup(content,"html.parser")
+results=soup.find(id="ResultsContainer")
+#print(results.prettify)
+job_elems = results.find_all('section', class_='card-content')
+for job_elem in job_elems:
+    dict={}
+    title_elem = job_elem.find('h2', {"class":"title"})
+    company_elem = job_elem.find('div', {"class":"company"})
+    location_elem = job_elem.find('div', {"class":"location"})
+    if None in (title_elem, company_elem, location_elem):
+        continue
+    dict["title_elem"]=title_elem.text.strip()
+    dict["company_elem"]=company_elem.text.strip()
+    dict["location_elem"]=location_elem.text.strip()
+    #print(title_elem.text.strip(),"---",company_elem.text.strip(),"---",location_elem.text.strip())
+    #print()
+    info_list_scrapped.append(dict)
+    connect.insert_values(args.db_name,tuple(dict.values()))
+    
+data_frame=pd.DataFrame(info_list_scrapped)
+data_frame.to_csv("job.csv")
+connect.get_information(args.db_name)
+
+
+#===============================================================================================
+#the connect.py file
+
+
+import sqlite3
+
+def connect(db_name):
+    conn=sqlite3.connect(db_name)
+    conn.execute("CREATE TABLE IF NOT EXISTS DIFF_JOBS (TITLE TEXT,COMPANY TEXT,LOCATION TEXT)")
+    print("created a table in our database")
+    conn.close()
+
+def insert_values(db_name,values):
+    conn=sqlite3.connect(db_name)
+    conn.execute("INSERT INTO DIFF_JOBS(TITLE,COMPANY,LOCATION) VALUES (?,?,?)",values)
+    conn.commit()
+    conn.close()
+
+def get_information(db_name):
+    conn = sqlite3.connect(db_name)
+    cur=conn.cursor()
+    cur.execute("SELECT * FROM DIFF_JOBS")
+    table_data=cur.fetchall()
+    for data in table_data:
+        print(data)
+    conn.close()
+    
+    
+#================================================================================================
+#the output
+
+created a table in our database
+('SQL BI (SSRS, SSIS) developer for Blackboard - NYC', 'LanceSoft Inc', 'New york, WA')
+('Python Developer', 'LanceSoft Inc', 'Woodlands, WA')
+('Junior QA Analyst - Melbourne, Victoria', 'Mediaocean', 'Melbourne, VIC')
+('Test Analyst', 'Dialog Group', 'Canberra, ACT')
+('Account Manager', 'Dialog Group', 'Canberra, ACT')
+('Customer Experience Technical Analyst - Sydney, New South Wales', 'Mediaocean', 'Sydney, NSW')
+('Test Analyst / Senior Test Analyst', 'Dialog Group', 'Melbourne, VIC')
+('Senior Practice Manager - IES (WA)', 'Blue Ocean Ventures', 'New York, WA')
+('Enterprise Account Executive', 'Zuora', 'Melbourne, VIC')
+('Performance Test Consultant', 'Dialog Group', 'Melbourne, VIC')
+('Software Developer/Senior Software Developer', 'Beacon Hill Staffing Group, LLC', 'Green Bay, WI')
+('SQL BI (SSRS, SSIS) developer for Blackboard - NYC', 'LanceSoft Inc', 'New york, WA')
+('Python Developer', 'LanceSoft Inc', 'Woodlands, WA')
+('Junior QA Analyst - Melbourne, Victoria', 'Mediaocean', 'Melbourne, VIC')
+('Test Analyst', 'Dialog Group', 'Canberra, ACT')
+('Account Manager', 'Dialog Group', 'Canberra, ACT')
+('Customer Experience Technical Analyst - Sydney, New South Wales', 'Mediaocean', 'Sydney, NSW')
+('Test Analyst / Senior Test Analyst', 'Dialog Group', 'Melbourne, VIC')
+('Senior Practice Manager - IES (WA)', 'Blue Ocean Ventures', 'New York, WA')
+('Enterprise Account Executive', 'Zuora', 'Melbourne, VIC')
+('Performance Test Consultant', 'Dialog Group', 'Melbourne, VIC')
+('Software Developer/Senior Software Developer', 'Beacon Hill Staffing Group, LLC', 'Green Bay, WI')
+
